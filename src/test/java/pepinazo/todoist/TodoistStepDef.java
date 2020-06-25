@@ -15,13 +15,14 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static junit.framework.Assert.*;
+
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class TodoistStepDef {
     public WebDriver driver;
     public WebDriverWait wait;
-
-
+    public int numCanicas;
 
     @Before
     public void setUpTest()
@@ -184,5 +185,29 @@ public class TodoistStepDef {
     public void theNewProjectIsListedInTheEnd() {
     }
 
+    @Given("I loged in with {word} and {word}")
+    public void enterWithCredentials (String userName, String password)
+    {
+        iNavigateToTodoistSite();
+        iEnterUserAndPassword(userName, password);
+        iSeeTheProjectPage();
+    }
 
+
+    @Given("I have {int} marbles")
+    public void iHaveMarvels(int numMarbles) {
+        numCanicas = numMarbles;
+    }
+
+
+    @When("I give away {int}")
+    public void iGiveAway(int numMarbles) {
+        numCanicas = numCanicas - numMarbles;
+    }
+
+
+    @Then("I have {int} marbles left")
+    public void iHaveMarblesLeft(int numMarbles) {
+        assertTrue(numCanicas == numMarbles);
+    }
 }
